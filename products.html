@@ -1,0 +1,82 @@
+
+
+
+ <link href="css/bootstrap.min.css" rel="stylesheet">
+ <link href="css/animate.css" rel="stylesheet">
+  <script src="js/jquery.js"></script>
+   <script src="js/jquery.scrollUp.min.js"></script>
+     <script src="js/jquery.prettyPhoto.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<div id="rows">
+
+<!-- <div class="row" id="1">
+    <div class="col-sm-4">
+      <p><strong>Name</strong></p><br>
+      <img src="bandmember.jpg" alt="Random Name" width="255" height="255">
+    </div>
+    <div class="col-sm-4">
+      <p><strong>Name</strong></p><br>
+      <img src="bandmember.jpg" alt="Random Name" width="255" height="255">
+    </div>
+    <div class="col-sm-4">
+      <p><strong>Name</strong></p><br>
+      <img src="bandmember.jpg" alt="Random Name" width="255" height="255">
+    </div>
+  </div>
+</div> -->
+</div>
+
+<script>
+
+var products = '{ "phones" : [' +
+'{ "productName":"Galaxy" , "cost":"100" , "productURL":"http://nearestore.com/Product_Images/Pro43.jpg"},' +
+'{ "productName":"Galaxy2" , "cost":"100" , "productURL":"http://nearestore.com/Product_Images/Pro43.jpg"},' +
+
+'{ "productName":"Galaxy2" , "cost":"100" , "productURL":"http://nearestore.com/Product_Images/Pro43.jpg"},' +
+'{ "productName":"Galaxy2" , "cost":"100" , "productURL":"http://nearestore.com/Product_Images/Pro43.jpg"},' +
+'{ "productName":"Galaxy2" , "cost":"100" , "productURL":"http://nearestore.com/Product_Images/Pro43.jpg"},' +
+'{ "productName":"Galaxy2" , "cost":"100" , "productURL":"http://nearestore.com/Product_Images/Pro43.jpg"},' +
+'{ "productName":"PeGalaxyter" , "cost":"100" ,"productURL":"http://nearestore.com/Product_Images/Pro43.jpg" } ]}';
+
+var obj = JSON.parse(products);
+
+
+
+populateTile = function()
+{
+var row =0;
+var rows = document.getElementById("rows");
+rows.innerHTML = "";
+var row1 = document.createElement("div");
+row1.setAttribute('class', 'row');	
+rows.appendChild(row1);
+
+
+ for(var i=0;i<obj.phones.length;i++){
+ 	var col1 = document.createElement("div");
+ 	col1.setAttribute('class', 'col-sm-4');	
+ 	
+ 	var fig1 = document.createElement("figure");
+
+ 	var img1 = document.createElement("img");
+ 	img1.src =obj.phones[i].productURL;
+ 	img1.style.height = "400";	
+ 	img1.style.width = "400";
+ 		
+ 	var figcaption1 = document.createElement("figcaption");
+ 	figcaption1.innerHTML=obj.phones[i].productName;
+ 	figcaption1.style.textAlign = "center"
+
+ 	fig1.appendChild(img1);
+ 	fig1.appendChild(figcaption1);
+ 	col1.appendChild(fig1);
+
+ 	row1.appendChild(col1);
+ 	}
+
+
+    }
+
+populateTile();
+</script>

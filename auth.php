@@ -21,7 +21,7 @@ session_start();
 			
 					$_SESSION['customerId']=$custid;
 					echo "Session Id: " . $_SESSION['customerId'];
-					header("Location: shop.php");
+					header("Location: products.html");
 			}else{
 				header("Location: login.html");
 		}
