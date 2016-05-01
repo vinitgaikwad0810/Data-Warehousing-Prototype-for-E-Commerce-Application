@@ -8,6 +8,19 @@
      <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
+<div class="form-group" align="center">
+  <label for="sel1">Select Product Type </label>
+  
+  <button type="button" class="btn btn-primary" onClick = document.location.href='showCart.html'; style="float:right;block:inline;margin:30px;">Show Cart</button>
+  
+  <button type="button" class="btn btn-primary" onClick = document.location.href='addPaymentMethods.html'; style="float:right;block:inline;margin:30px;">Add Payment Methods</button>
+  
+  <select class="form-control" style="width:500"id="sel1" onchange="populateOnChange()">
+    <option selected="selected">Phone</option>
+    <option>Accessories</option>
+  </select>
+</div>
+
 <div id="rows">
 
 <!-- <div class="row" id="1">
@@ -29,29 +42,41 @@
 
 <script>
 
-var products = '{ "phones" : [' +
-'{ "productName":"Galaxy" , "cost":"100" , "productURL":"http://nearestore.com/Product_Images/Pro43.jpg"},' +
-'{ "productName":"Galaxy2" , "cost":"100" , "productURL":"http://nearestore.com/Product_Images/Pro43.jpg"},' +
-
-'{ "productName":"Galaxy2" , "cost":"100" , "productURL":"http://nearestore.com/Product_Images/Pro43.jpg"},' +
-'{ "productName":"Galaxy2" , "cost":"100" , "productURL":"http://nearestore.com/Product_Images/Pro43.jpg"},' +
-'{ "productName":"Galaxy2" , "cost":"100" , "productURL":"http://nearestore.com/Product_Images/Pro43.jpg"},' +
-'{ "productName":"Galaxy2" , "cost":"100" , "productURL":"http://nearestore.com/Product_Images/Pro43.jpg"},' +
-'{ "productName":"PeGalaxyter" , "cost":"100" ,"productURL":"http://nearestore.com/Product_Images/Pro43.jpg" } ]}';
-
-var obj = JSON.parse(products);
-
-
-
-populateTile = function()
+populateOnChange = function()
 {
+	rows.innerHTML = " ";
+
+var e = document.getElementById("sel1");
+var productType = e.options[e.selectedIndex].text;
+
+	 $.ajax({
+      url: 'getProducts.php',
+      type: 'post',
+      data: {'productType': productType},
+      success: function(products, status) {
+        console.log(products);
+        renderProducts(JSON.stringify(products));
+    },
+      error: function(xhr, desc, err) {
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+      }
+    }); 
+}
+
+
+renderProducts = function(products) {
+var obj = JSON.parse(products);
+console.log(obj);
+
+
 var row =0;
 var rows = document.getElementById("rows");
-rows.innerHTML = "";
+rows.innerHTML = " ";
 var row1 = document.createElement("div");
 row1.setAttribute('class', 'row');	
-rows.appendChild(row1);
 
+rows.appendChild(row1);
 
  for(var i=0;i<obj.phones.length;i++){
  	var col1 = document.createElement("div");
@@ -61,22 +86,54 @@ rows.appendChild(row1);
 
  	var img1 = document.createElement("img");
  	img1.src =obj.phones[i].productURL;
- 	img1.style.height = "400";	
- 	img1.style.width = "400";
+  img1.style.align = "middle";
+ 	img1.style.height = "300";	
+ 	img1.style.width = "300";
  		
  	var figcaption1 = document.createElement("figcaption");
- 	figcaption1.innerHTML=obj.phones[i].productName;
- 	figcaption1.style.textAlign = "center"
+ 	figcaption1.innerHTML=obj.phones[i].productName+'  $'+obj.phones[i].productCost ;
+ 	figcaption1.style.textAlign = "center";
+  figcaption1.style.fontSize = "1.5em";
+ 
+  var button1 = document.createElement("button");
+ var btnText  = document.createTextNode("Add To Cart");
+ button1.appendChild(btnText);
+ button1.style.margin = "auto";
+ button1.style.display = "block";
+button1.style.marginBottom = "30px";
+button1.style.marginTop = "7px";
+button1.id = obj.phones[i].productId+'~'+obj.phones[i].productCost+'~'+obj.phones[i].productName+'~'+obj.phones[i].productURL;
+button1.addEventListener("click", addToCart);
+
 
  	fig1.appendChild(img1);
  	fig1.appendChild(figcaption1);
  	col1.appendChild(fig1);
-
+  col1.appendChild(button1);
  	row1.appendChild(col1);
  	}
 
 
-    }
+}
 
-populateTile();
+addToCart = function()
+{
+  var cart =JSON.parse(sessionStorage.getItem("cart"));; 
+
+        if(cart==null)
+          {
+          cart=[this.id];
+          sessionStorage.setItem("cart",JSON.stringify(cart));
+          }
+          else
+          {
+         console.log(cart.length)
+          cart.push(this.id);
+          sessionStorage.setItem("cart",JSON.stringify(cart));
+          }
+}
+
+window.onload = function(){
+ populateOnChange();
+}
 </script>

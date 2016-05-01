@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 30, 2016 at 04:46 AM
+-- Generation Time: May 01, 2016 at 02:37 AM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `project-226-relational`
 --
-CREATE DATABASE IF NOT EXISTS `project-226-relational` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `project-226-relational`;
 
 -- --------------------------------------------------------
 
@@ -60,7 +58,8 @@ CREATE TABLE `Customer` (
 --
 
 INSERT INTO `Customer` (`CustomerId`, `CustomerName`, `Street`, `City`, `State`, `Country`, `Zipcode`, `EmailId`, `Password`) VALUES
-(4, 'Ankit', 'California', 'san jose', '', 'USA', '95112', 'ankit@gmail.com', '');
+(4, 'Ankit', 'California', 'san jose', '', 'USA', '95112', 'ankit@gmail.com', '123'),
+(5, 'heidi', 'oweifjoi', 'nkfj', '', 'jowih', 'dwoh', 'heidi@gmail.com', '123');
 
 -- --------------------------------------------------------
 
@@ -168,8 +167,18 @@ CREATE TABLE `PaymentMethods` (
 DROP TABLE IF EXISTS `PaymentMethodTypes`;
 CREATE TABLE `PaymentMethodTypes` (
   `PaymentMethodType` varchar(50) NOT NULL,
-  `Description` int(11) NOT NULL
+  `Description` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `PaymentMethodTypes`
+--
+
+INSERT INTO `PaymentMethodTypes` (`PaymentMethodType`, `Description`) VALUES
+('mastercard', 'mastercard'),
+('netbanking', 'netbanking'),
+('paypal', 'paypal'),
+('visa', 'visa');
 
 -- --------------------------------------------------------
 
@@ -203,6 +212,23 @@ CREATE TABLE `Products` (
   `VendorId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `Products`
+--
+
+INSERT INTO `Products` (`ProductId`, `ProductName`, `ProductBarcode`, `ProductDescription`, `ProductAvailability`, `ProductCost`, `ProductURL`, `ProductType`, `VendorId`) VALUES
+(1, 'Galaxy Express 3', '1000', 'Galaxy Express 3', 50, 100, 'http://images.techtimes.com/data/thumbs/full/226513/600/0/0/0/samsung-galaxy-express-prime.jpg', 'PH', 1),
+(2, 'Galaxy Express Prime', '1001', 'Galaxy Express Prime', 50, 120, 'http://www.androidheadlines.com/wp-content/uploads/2016/01/Samsung-Galaxy-J3-2016-Official-Render-Boost-KK.jpg', 'PH', 1),
+(3, 'Galaxy AMP 2', '1002', 'Galaxy AMP-2', 50, 150, 'http://i-cdn.phonearena.com/images/phones/41550-large/Samsung-Galaxy-Amp.jpg', 'PH', 1),
+(4, 'Galaxy J7', '1003', 'Galaxy J7', 50, 270, 'http://www.sammobile.com/wp-content/uploads/2016/04/samsung-galaxy-j7-2016.jpg', 'PH', 1),
+(5, 'IPhone 6S', '1004', 'Iphone 6S', 50, 900, 'http://store.storeimages.cdn-apple.com/4973/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone6s/plus/iphone6s-plus-box-rosegold-2015_GEO_US?wid=478&hei=595&fmt=jpeg&qlt=95&op_sharpen=0&resMode=bicub&op_usm=0.5,0.5,0,0&iccEmbed=0&layer=comp&.v=2WElT0', 'PH', 5),
+(6, 'Iphone 6S Plus', '1005', 'Iphone 6S Plus', 50, 860, 'https://9to5mac.files.wordpress.com/2013/04/iphone6-plus-box-space-gray-2014.jpeg', 'PH', 6),
+(7, 'Iphone 5 S', '1006', 'Iphone 5s', 50, 170, 'http://nearestore.com/Product_Images/Pro43.jpg', 'PH', 6),
+(8, 'Screen Protector', '2000', 'Screen Protector', 50, 8, 'http://www.oppomart.com/media/catalog/product/cache/1/small_image/9df78eab33525d08d6e5fb8d27136e95/n/i/nillkin-screen-protector-oppo-n1-1_1_1_2.jpg', 'AC', 6),
+(9, 'Bluetooth Headsets', '2001', 'Bluetooth Headsets', 50, 15, 'https://www.headsets.com/images/hds2/products/vxi/800/891.jpg', 'AC', 6),
+(10, 'Charger', '2002', 'Charger', 50, 40, 'http://www.o-digital.com/uploads/2227/2279-1/Mobile_Phone_Charger_878.jpg', 'AC', 6),
+(11, 'Batteries', '2004', 'Batteries', 50, 100, 'http://3.imimg.com/data3/HO/BY/MY-8826974/mobile-battery-250x250.jpg', 'AC', 6);
+
 -- --------------------------------------------------------
 
 --
@@ -214,6 +240,14 @@ CREATE TABLE `ProductTypes` (
   `ProductType` varchar(50) NOT NULL,
   `ProductTypeDesc` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ProductTypes`
+--
+
+INSERT INTO `ProductTypes` (`ProductType`, `ProductTypeDesc`) VALUES
+('AC', 'Accessories'),
+('PH', 'Phones');
 
 -- --------------------------------------------------------
 
@@ -282,6 +316,20 @@ CREATE TABLE `Vendors` (
   `VendorName` varchar(500) NOT NULL,
   `VendorLocation` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Vendors`
+--
+
+INSERT INTO `Vendors` (`VendorId`, `VendorName`, `VendorLocation`) VALUES
+(1, 'Samsung', 'California'),
+(2, 'LG', 'Texas'),
+(3, 'Motorola', 'California'),
+(4, 'HTC', 'Texas'),
+(5, 'Apple', 'Texas'),
+(6, 'Microsoft', 'Texas'),
+(7, 'Sony', 'Texas'),
+(8, 'Blackberry', 'Texas');
 
 --
 -- Indexes for dumped tables
@@ -417,7 +465,7 @@ ALTER TABLE `Vendors`
 -- AUTO_INCREMENT for table `Customer`
 --
 ALTER TABLE `Customer`
-  MODIFY `CustomerId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `CustomerId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `CustomerPhoneNumber`
 --
@@ -452,7 +500,7 @@ ALTER TABLE `PaymentMethods`
 -- AUTO_INCREMENT for table `Products`
 --
 ALTER TABLE `Products`
-  MODIFY `ProductId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ProductId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `Shipping`
 --
@@ -467,7 +515,7 @@ ALTER TABLE `Stores`
 -- AUTO_INCREMENT for table `Vendors`
 --
 ALTER TABLE `Vendors`
-  MODIFY `VendorId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `VendorId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- Constraints for dumped tables
 --
