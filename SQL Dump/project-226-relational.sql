@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 01, 2016 at 02:37 AM
+-- Generation Time: May 01, 2016 at 12:29 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `project-226-relational`
 --
+CREATE DATABASE IF NOT EXISTS `project-226-relational` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `project-226-relational`;
 
 -- --------------------------------------------------------
 
@@ -130,6 +132,22 @@ CREATE TABLE `OrderItem` (
   `OrderId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `OrderItem`
+--
+
+INSERT INTO `OrderItem` (`OrderItemId`, `OTime`, `ODate`, `Quantity`, `Cost`, `ProductId`, `OrderId`) VALUES
+(1, '03:19:34', '2016-05-01', 1, 100, 1, 3),
+(2, '03:19:34', '2016-05-01', 1, 120, 2, 3),
+(3, '03:19:34', '2016-05-01', 1, 100, 1, 3),
+(4, '03:19:34', '2016-05-01', 1, 150, 3, 3),
+(5, '03:19:34', '2016-05-01', 1, 120, 2, 3),
+(6, '03:21:27', '2016-05-01', 1, 100, 1, 4),
+(7, '03:21:27', '2016-05-01', 1, 120, 2, 4),
+(8, '03:21:27', '2016-05-01', 1, 100, 1, 4),
+(9, '03:21:27', '2016-05-01', 1, 150, 3, 4),
+(10, '03:21:27', '2016-05-01', 1, 120, 2, 4);
+
 -- --------------------------------------------------------
 
 --
@@ -144,6 +162,15 @@ CREATE TABLE `Orders` (
   `PaymentMethodId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `Orders`
+--
+
+INSERT INTO `Orders` (`OrderId`, `CustomerId`, `ShippingId`, `PaymentMethodId`) VALUES
+(2, 4, 4, 10),
+(3, 4, 5, 10),
+(4, 4, 6, 10);
+
 -- --------------------------------------------------------
 
 --
@@ -157,6 +184,16 @@ CREATE TABLE `PaymentMethods` (
   `CustomerId` int(11) NOT NULL,
   `PaymentMethodType` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `PaymentMethods`
+--
+
+INSERT INTO `PaymentMethods` (`PaymentMethodId`, `PaymentMethodDetails`, `CustomerId`, `PaymentMethodType`) VALUES
+(10, '12334', 4, 'mastercard'),
+(11, 're123', 4, 'mastercard'),
+(12, 'pay123', 4, 'paypal'),
+(13, '554', 4, 'visa');
 
 -- --------------------------------------------------------
 
@@ -261,6 +298,16 @@ CREATE TABLE `Regions` (
   `Region` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `Regions`
+--
+
+INSERT INTO `Regions` (`RegionId`, `Region`) VALUES
+('AZ', 'AZ'),
+('CA', 'CA'),
+('NY', 'NY'),
+('SC', 'SC');
+
 -- --------------------------------------------------------
 
 --
@@ -279,6 +326,15 @@ CREATE TABLE `Shipping` (
   `DestinationRegion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `Shipping`
+--
+
+INSERT INTO `Shipping` (`ShippingId`, `ShippingDate`, `DaysToDeliver`, `ShipmentOwner`, `ShipmentCost`, `ShippingOptionsType`, `SourceRegion`, `DestinationRegion`) VALUES
+(4, '2016-05-01', 7, 'Phonizon', 10, 'Australia Post', 'CA', 'AZ'),
+(5, '2016-05-01', 7, 'Phonizon', 10, 'Australia Post', 'CA', 'AZ'),
+(6, '2016-05-01', 7, 'Phonizon', 10, 'Australia Post', 'CA', 'AZ');
+
 -- --------------------------------------------------------
 
 --
@@ -290,6 +346,17 @@ CREATE TABLE `ShippingOptionsTypes` (
   `ShippingOptionsType` varchar(50) NOT NULL,
   `Description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ShippingOptionsTypes`
+--
+
+INSERT INTO `ShippingOptionsTypes` (`ShippingOptionsType`, `Description`) VALUES
+('Australia Post', 'Australia Post'),
+('Canada Post', 'Canada Post'),
+('DHL Express', 'DHL Express'),
+('FedEx', 'FedEx'),
+('Royal Mail', 'Royal Mail');
 
 -- --------------------------------------------------------
 
@@ -485,17 +552,17 @@ ALTER TABLE `Inventory`
 -- AUTO_INCREMENT for table `OrderItem`
 --
 ALTER TABLE `OrderItem`
-  MODIFY `OrderItemId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `OrderItemId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `Orders`
 --
 ALTER TABLE `Orders`
-  MODIFY `OrderId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `OrderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `PaymentMethods`
 --
 ALTER TABLE `PaymentMethods`
-  MODIFY `PaymentMethodId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `PaymentMethodId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `Products`
 --
@@ -505,7 +572,7 @@ ALTER TABLE `Products`
 -- AUTO_INCREMENT for table `Shipping`
 --
 ALTER TABLE `Shipping`
-  MODIFY `ShippingId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ShippingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `Stores`
 --
