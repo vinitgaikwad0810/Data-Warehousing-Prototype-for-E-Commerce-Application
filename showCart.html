@@ -1,37 +1,74 @@
- <link href="css/bootstrap.min.css" rel="stylesheet">
- <link href="css/animate.css" rel="stylesheet">
-  <script src="js/jquery.js"></script>
-   <script src="js/jquery.scrollUp.min.js"></script>
-     <script src="js/jquery.prettyPhoto.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/animate.css" rel="stylesheet">
+<script src="js/jquery.js"></script>
+<script src="js/jquery.scrollUp.min.js"></script>
+<script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
 <h2 align="center">Your Cart</h2>
 
-<table class="table table-hover">
+ <div class="table-responsive">
+<table class="table table-hover" style="margin-left:20px;margin-right:20px;">
     <thead>
       <tr>
-        <th>Product</th>
-        <th>Image</th>
-        <th>Picture</th>
-        <th>Quantity</th>
-       </tr>
+        <th style="text-align:center;">Product</th>
+        <th style="text-align:center;">Image</th>
+        <th style="text-align:center;">Cost</th>
+        </tr>
     </thead>
     <tbody id="tbody">
     </tbody>
 
 </table>
+</div>
 
-    <button type="button" class="btn btn-primary" onClick = document.location.href='showCart.html'; style="float:right;block:inline-block">Place Order</button>
+<div style="margin-left:42%;margin-top:20px;margin-bottom:20px;">
+<label for="sel1">Select Payment Type </label>
+ <select class="form-control" style="width:300" id="selPaymentMethod">
+  </select>
+</div>
+
+<div align="center">
+<table class="table table-hover" align="center">
+    
+    <tr>
+    <td align="center">
+    	<label for="sel1">Select Shipping Type</label>
+ <select class="form-control" style="width:300" id="selShippingType">
+  </select>
+    </td>
+    
+    <td align="center">
+    	<label for="sel1">Select Destination</label>
+     <select class="form-control" style="width:300" id="selRegion">
+  </select>
+    </td>
+
+    </tr>
+
+</table>
+</div>
+
+<div>
+
+    <button type="button" class="btn btn-primary" onClick = placeOrder(); style="margin-left:50%;block:inline-block">Place Order</button>
 <script>
+var global_cost=0;
+var productsInCart = {};
+
 window.onload = function(){
  displayCart();
+ getPaymentMethodDetails();
+ getShippingType();
+ getDestinationRegion();
 }
+
 function displayCart(){
 
     	if(JSON.parse(sessionStorage.getItem("cart"))!=null)
-    		var tbody = document.getElementById('tbody');
-    	var cart = JSON.parse(sessionStorage.getItem("cart"))
     	{
+    	var tbody = document.getElementById('tbody');
+    	var cart = JSON.parse(sessionStorage.getItem("cart"))
     	var itemNumber = JSON.parse(sessionStorage.getItem("cart")).length;
     	for(var i = 0; i<itemNumber; i++)
     	{
@@ -42,73 +79,162 @@ function displayCart(){
     		var productName = item[2];
     		var productURL = item[3];
 
+        productsInCart[i] = {productId,productCost};
+
 
     		var tr1 = document.createElement('tr');
     		var td1 = document.createElement('td');
+        td1.align="center";
     			td1.innerHTML = productName;
+          td1.style.width="30%";
 
     		var img1 = document.createElement("img");
  			img1.src = productURL;
- 	   		img1.style.height = "50";	
- 			img1.style.width = "50";
+ 	   		img1.style.height = "60";	
+ 			img1.style.width = "60";
     		var td2 = document.createElement('td');
     			td2.appendChild(img1);
-    		
+    		td2.align="center";
+        td2.style.width="30%";
+
     		var td3 = document.createElement('td');
     		td3.innerHTML = productCost;
-    		
+        global_cost = global_cost+parseInt(productCost);
+    		td3.align="center";
+        td3.style.width="30%";
 
 			var input1 = document.createElement("input");
 			input1.setAttribute('id',productId);
 
-    		var td4 = document.createElement('td');
-    		td4.appendChild(input1);
-
+    		
     		tr1.appendChild(td1);
     		tr1.appendChild(td2);
     		tr1.appendChild(td3);
-    		tr1.appendChild(td4);
+    		
 
     		tbody.appendChild(tr1);
-
-    	/*var div1 = document.createElement('div');
- 		div1.class = "row";
- 		
-
- 		var divcol1 =document.createElement('div');
- 		divcol1.setAttribute('class', 'col-sm-3');	
- 		divcol1.style.fontSize = '130%';
- 		divcol1.innerHTML = productName;
-
-
- 		var divcol2 =document.createElement('div');
- 		divcol2.setAttribute('class', 'col-sm-3');	
- 		var img1 = document.createElement("img");
- 		img1.src = productURL;
- 	   	img1.style.height = "50";	
- 		img1.style.width = "50";
- 		divcol2.style.fontSize = '130%';
- 		divcol2.appendChild(img1);
-
-
- 		var divcol3 =document.createElement('div');
- 		divcol3.setAttribute('class', 'col-sm-3');	
- 		divcol3.style.fontSize = '130%';
- 		divcol3.innerHTML = productCost;
-
- 		var divcol4 =document.createElement('div');
- 		divcol4.setAttribute('class', 'col-sm-3');	
- 		divcol4.style.fontSize = '130%';
- 		divcol4.innerHTML = productCost;
-
-    	
- 		div1.appendChild(divcol1);
- 		div1.appendChild(divcol2);
- 		div1.appendChild(divcol3);
- 		div1.appendChild(divcol4);
- 		cartElements.appendChild(div1);*/
-    	}
+		}
        	}
        }
+
+    
+
+       getPaymentMethodDetails = function(){
+
+       $.ajax({
+      url: 'getPaymentMethodDetails.php',
+      type: 'post',
+      //data: {'productType': productType},
+      success: function(paymentMethodDetails, status) {
+      renderPaymentMethodDetails(JSON.stringify(paymentMethodDetails));
+    },
+      error: function(xhr, desc, err) {
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+      }
+    }); 
+       }
+
+       renderPaymentMethodDetails = function(paymentMethodDetails){
+
+        var obj = JSON.parse(paymentMethodDetails);
+        console.log(obj);
+
+       	var selPaymentMethod = document.getElementById('selPaymentMethod');
+       	for(var i = 0; i < obj.PaymentMethodDetails.length; i++)
+       	{
+   		var option = document.createElement("option");
+		option.text = '***'+obj.PaymentMethodDetails[i].PaymentMethodDetails.slice(-3);
+    option.id = obj.PaymentMethodDetails[i].PaymentMethodId;
+   	selPaymentMethod.add(option);
+       	}
+
+       }
+
+       getShippingType = function() {
+ $.ajax({
+      url: 'getShippingType.php',
+      type: 'post',
+      //data: {'productType': productType},
+      success: function(shippingType, status) {
+      rendershippingType(shippingType);
+    },
+      error: function(xhr, desc, err) {
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+      }
+    }); 
+       }
+
+
+       rendershippingType = function(shippingType) {
+		var selShippingType = document.getElementById('selShippingType');
+       	for(var i = 0; i < shippingType.length; i++)
+       	{
+   		var option = document.createElement("option");
+		option.text = shippingType[i];
+		selShippingType.add(option);
+       	}
+       }
+
+       getDestinationRegion = function() {
+ 	 $.ajax({
+      url: 'getRegions.php',
+      type: 'post',
+      //data: {'productType': productType},
+      success: function(regions, status) {
+      renderRegions(regions);
+    },
+      error: function(xhr, desc, err) {
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+      }
+    }); 
+ }
+
+ renderRegions = function(regions) {
+ 	
+ 	var selRegion = document.getElementById('selRegion');
+       	for(var i = 0; i < regions.length; i++)
+       	{
+   	var option = document.createElement("option");
+		option.text = regions[i];
+		selRegion.add(option);
+       	}
+
+ }
+
+ placeOrder = function() {
+
+
+
+
+  var arr = {};
+  var selRegion = document.getElementById('selRegion');
+  
+  arr['region'] = selRegion.options[selRegion.selectedIndex].text;
+  arr['shippingType'] = selShippingType.options[selShippingType.selectedIndex].text;
+  arr['cost'] = global_cost;
+  arr['paymentMethodDetailsId'] = selPaymentMethod.options[selPaymentMethod.selectedIndex].id;
+
+  arrToSend = JSON.stringify(arr);
+  productsInCartToSend =JSON.stringify(productsInCart);
+
+   $.ajax({
+      url: 'placeOrder.php',
+      type: 'post',
+      datatype: 'JSON',
+      data: {'arr': arrToSend,'productsInCart':productsInCartToSend },
+      success: function( status) {
+     location.href = "products.html";
+    },
+      error: function(xhr, desc, err) {
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+      }
+    }); 
+
+  //console.log("arr is "+JSON.stringify(productsInCart));
+ }
 </script>
 

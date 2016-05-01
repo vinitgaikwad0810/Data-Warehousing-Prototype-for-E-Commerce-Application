@@ -1,1 +1,0 @@
-4{"0":{"pt":"mastercard","pd":"fewf"},"1":{"pt":"mastercard","pd":"qq"}}

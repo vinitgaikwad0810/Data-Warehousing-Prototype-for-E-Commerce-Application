@@ -85,8 +85,8 @@
 	</header><!--/header-->
 	
 <p>
-	<?php
-	$name = filter_input(INPUT_POST, "name");
+	<?php$name = filter_input(INPUT_POST, "name");
+	
 	$email = filter_input(INPUT_POST, "email");
 	$password = filter_input(INPUT_POST, "password");
 	$street = filter_input(INPUT_POST, "street");
