@@ -6,17 +6,18 @@
      <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
-   
+<body>   
 <div id = 'paymentMethods' style = "margin:10px;margin-left:40%">
 
 </div>
               
 <button type="button" class="btn btn-info" style="margin:10px;margin-left:38%;block:inline;" onClick=getPaymentMethods()>Add Another Payment Method</button>
 
-<button type="button" class="btn btn-info" style="margin:10px;margin-left:10px;block:inline;" onClick=getPaymentMethods()>Add All</button>
+<button type="button" class="btn btn-info" style="margin:10px;margin-left:10px;block:inline;" onClick=postPaymentMethodDetails()>Add All</button>
 
     <script>
-var global_id=1;
+    var gobal_arr=null;
+var global_id=0;
     getPaymentMethods = function() {
   $.ajax({
       url: 'getPaymentMethods.php',
@@ -37,19 +38,19 @@ var global_id=1;
 addPayment = function(paymentArray) {
 var paymentMethods = document.getElementById('paymentMethods');
 var paymentTypes = document.createElement("select");
-paymentTypes.id = "paymentTypes"+i;
+paymentTypes.id = "paymentTypes"+global_id;
 paymentTypes.name = "paymentTypes";
 paymentTypes.style.marginTop = "10px";
 paymentTypes.style.marginRight = "10px";
 paymentMethods.appendChild(paymentTypes);
 
-var paymentMethodDetaial =  document.createElement("input");
-paymentMethodDetaial.id = 'paymentMethodDetaial'+i;
-paymentMethodDetaial.name ='paymentMethodDetaial';
-paymentMethodDetaial.style.marginLeft = "10px";
-paymentMethodDetaial.style.paddingLeft = "45px";
-paymentMethodDetaial.placeholder = "Enter details";
-paymentMethods.appendChild(paymentMethodDetaial);
+var paymentMethodDetail =  document.createElement("input");
+paymentMethodDetail.id = 'paymentMethodDetail'+global_id;
+paymentMethodDetail.name ='paymentMethodDetail';
+paymentMethodDetail.style.marginLeft = "10px";
+paymentMethodDetail.style.paddingLeft = "45px";
+paymentMethodDetail.placeholder = "Enter details";
+paymentMethods.appendChild(paymentMethodDetail);
 
 
 //Create and append the options
@@ -60,6 +61,41 @@ for (var i = 0; i < paymentArray.length; i++) {
     paymentTypes.appendChild(option);
 }
 paymentMethods.appendChild(document.createElement('br') );
+global_id++;
       }
 
+
+      postPaymentMethodDetails = function () {
+        var finalArr = {};
+        var total = document.getElementsByName('paymentTypes').length;
+        for ( var i = 0; i< total; i++)
+        {
+          var arr = {};
+          var selectedElement = document.getElementsByName('paymentTypes')[i];
+          arr['pt'] = selectedElement.options[selectedElement.selectedIndex].text;
+          arr['pd'] = document.getElementsByName('paymentMethodDetail')[i].value;
+          finalArr[i] = arr; 
+}
+gobal_arr = JSON.stringify(finalArr);
+console.log(gobal_arr);
+//console.log(JSON.stringify(finalArr));
+//console.log(JSON.parse(JSON.stringify(finalArr)));
+ var tmp = "hi";
+ $.ajax({
+      url: 'postPaymentMethodDetails.php',
+      type: 'post',
+      datatype: 'JSON',
+      data: {'finalArr': gobal_arr},
+      success: function(status) {
+        //console.log("post done>> "+data);
+         //location.href = "products.html";
+    },
+      error: function(xhr, desc, err) {
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+      }
+    }); 
+}      
+
     </script>
+  </body> 
