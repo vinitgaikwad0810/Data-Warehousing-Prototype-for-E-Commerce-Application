@@ -78,8 +78,7 @@ global_id++;
 }
 gobal_arr = JSON.stringify(finalArr);
 console.log(gobal_arr);
-//console.log(JSON.stringify(finalArr));
-//console.log(JSON.parse(JSON.stringify(finalArr)));
+
  var tmp = "hi";
  $.ajax({
       url: 'postPaymentMethodDetails.php',
@@ -88,7 +87,7 @@ console.log(gobal_arr);
       data: {'finalArr': gobal_arr},
       success: function(status) {
         //console.log("post done>> "+data);
-         //location.href = "products.html";
+         location.href = "products.html";
     },
       error: function(xhr, desc, err) {
         console.log(xhr);
