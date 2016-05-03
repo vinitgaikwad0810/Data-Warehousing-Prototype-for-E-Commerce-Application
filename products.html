@@ -1,5 +1,6 @@
 
-
+<head>
+  <title>Products | E-Shopper</title>
 
  <link href="css/bootstrap.min.css" rel="stylesheet">
  <link href="css/animate.css" rel="stylesheet">
@@ -8,6 +9,13 @@
      <script src="js/jquery.prettyPhoto.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
+</head>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"><img src="images/home/logo.png" alt="" /></a>
+    </div>
 <div class="form-group" align="center">
   <label for="sel1">Select Product Type </label>
   
@@ -20,6 +28,11 @@
     <option>Accessories</option>
   </select>
 </div>
+  </div>
+</nav>
+
+
+
 
 <div id="rows">
 
@@ -93,7 +106,7 @@ rows.appendChild(row1);
  	var figcaption1 = document.createElement("figcaption");
  	figcaption1.innerHTML=obj.phones[i].productName+'  $'+obj.phones[i].productCost ;
  	figcaption1.style.textAlign = "center";
-  figcaption1.style.fontSize = "1.5em";
+  figcaption1.style.fontSize = "1.25em";
  
   var button1 = document.createElement("button");
  var btnText  = document.createTextNode("Add To Cart");
@@ -102,6 +115,7 @@ rows.appendChild(row1);
  button1.style.display = "block";
 button1.style.marginBottom = "30px";
 button1.style.marginTop = "7px";
+button1.setAttribute('class','class="btn btn-warning');
 button1.id = obj.phones[i].productId+'~'+obj.phones[i].productCost+'~'+obj.phones[i].productName+'~'+obj.phones[i].productURL;
 button1.addEventListener("click", addToCart);
 
