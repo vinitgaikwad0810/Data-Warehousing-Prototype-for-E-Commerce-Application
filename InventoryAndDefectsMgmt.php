@@ -37,17 +37,7 @@
 							</ul>
 						</div>
 					</div>
-					<div class="col-sm-6">
-						<div class="social-icons pull-right">
-							<ul class="nav navbar-nav">
-								<li><a href=""><i class="fa fa-facebook"></i></a></li>
-								<li><a href=""><i class="fa fa-twitter"></i></a></li>
-								<li><a href=""><i class="fa fa-linkedin"></i></a></li>
-								<li><a href=""><i class="fa fa-dribbble"></i></a></li>
-								<li><a href=""><i class="fa fa-google-plus"></i></a></li>
-							</ul>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div><!--/header_top-->
@@ -86,16 +76,16 @@
 		</div><!--/header-bottom-->
 	</header><!--/header-->
 	
-	<section id="form"><!--form-->
+	<section id="form" style="margin-top:-20px;"><!--form-->
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-4 col-sm-offset-1">
 					<div class="login-form"><!--login form-->
 						<h2>Add Defect</h2>
 						<form method="post">
-							
-							Select Store
-							<select name="storesDef">
+							<div class="form-group">
+							<label for="storesDef">Select Store</label>
+							<select class="form-control" name="storesDef" id ="storesDef">
 								  <?php
 								  try{
 								  		$con = new PDO("mysql:host=173.194.111.48;port=3306;dbname=codeblooded","root","cmpe226");
@@ -114,8 +104,10 @@
 									}
 								?>
 							</select>
-							Select Product
-							<select name="productsDef">
+						</div>
+							<div class="form-group">
+							<label for="productsDef">Select Product</label>
+							<select class="form-control" name="productsDef" id="productsDef">
 								  <?php
 								  echo "Test";
 								  try{
@@ -133,8 +125,10 @@
 									}
 								?>
 							</select>
-							Select Customer
-							<select name="customerDef">
+						</div>
+							<div class="form-group">
+							<label for="customerDef">Select Customer</label>
+							<select name="customerDef" id="customerDef" class="form-control">
 								  <?php
 										$con = new PDO("mysql:host=173.194.111.48;port=3306;dbname=codeblooded","root","cmpe226");
 										$con->setAttribute(PDO::ATTR_ERRMODE,
@@ -153,8 +147,12 @@
 									}
 								?>
 							</select>
-							No of Items
-							<input type="text" name="quantityDef" placeholder="No of Items" />
+							</div>
+
+							<div class="form-group">
+							<label for="quantityDef">No of Items</label>
+							<input type="text" class="form-control" name="quantityDef" id="quantityDef" placeholder="No of Items" />
+							</div>
 							<button type="button" onclick="saveDefect()" class="btn type="button"btn-default">Add</button>
 						</form>
 					</div><!--/login form-->
@@ -166,9 +164,9 @@
 					<div class="signup-form"><!--sign up form-->
 						<h2>Add Inventory</h2>
 						<form method="post">
-							
-							Select Store
-							<select name="storesInv">
+							<div class="form-group">
+							<label for="storesInv">Select Store</label>
+								<select name="storesInv" id ="storesInv" class="form-control">
 								  <?php
 								  try{
 								  		$con = new PDO("mysql:host=173.194.111.48;port=3306;dbname=codeblooded","root","cmpe226");
@@ -187,8 +185,10 @@
 									}
 								?>
 							</select>
-							Select Product
-							<select name="productsInv">
+						</div>
+						<div class="form-group">
+							<label for="productsInv">Select Product</label>
+							<select name="productsInv" id ="productsInv" class="form-control">
 								  <?php
 								  echo "Test";
 								  try{
@@ -206,8 +206,13 @@
 									}
 								?>
 							</select>
-							No of Items
-							<input type="text" name="quantityInv" placeholder="No of Items" />
+						</div>
+
+						<div class="form-group">
+
+							<label for="quantityInv">No of Items</label>
+							<input type="text" name="quantityInv" id="quantityInv" class="form-control" placeholder="No of Items" />
+							</div>
 							<button type="button" onclick="saveInventory()" class="btn type="button"btn-default">Add</button>
 
 						</form>
@@ -218,7 +223,7 @@
 		</br>
 		</br>
 			<div class="row">
-				<button type="button" onclick="runETL()" class="btn type=" style="width:100%;" button"btn-default">Run ETL Tool</button>
+				<button type="button" onclick="runETL()" class="btn btn-warning" style="width:50%;margin-left:25%;" button"btn-default">Run ETL Tool</button>
 			</div>
 		</div>
 	</section><!--/form-->
