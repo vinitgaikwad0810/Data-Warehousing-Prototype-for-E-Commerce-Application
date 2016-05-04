@@ -1,24 +1,23 @@
+use `project-226-starSchema`;
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `sp_etl_order_fact` $$
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_etl_order_fact`(
-  IN loc_username VARCHAR(255)
 )
 BEGIN
 -- Description: Query will get all phones and accessories, their total cost and items sold per day.
 -- Appending Order_fact table data
-INSERT INTO starSchema.ORDERS
+INSERT INTO `project-226-starSchema`.ORDERS
 (CalenderKey, ProductTypeKey, DollarsSold, UnitsSold)
 -- Phones
 SELECT ss_c.CalanderKey, ss_p.ProductKey, sum(p.ProductCost), count(p.ProductCost)
-FROM codeblooded.OrderItem oi, codeblooded.Products p, codeblooded.Phones ph, 
-starSchema.Calander ss_c,starSchema.Products ss_p
+FROM codeblooded.OrderItem oi, codeblooded.Products p,
+`project-226-starSchema`.Calander ss_c,`project-226-starSchema`.Products ss_p
 where oi.ProductId=p.ProductId
-and p.ProductType=1
-and ph.PhoneId=p.ProductId
+and p.ProductType='PH'
 and ss_c.FullDate=oi.ODate
 and oi.ODate between 
-(select max(FullDate) from starSchema.ORDERS of, starSchema.Calander c 
+(select max(FullDate) from `project-226-starSchema`.ORDERS of, `project-226-starSchema`.Calander c 
 where of.CalanderKey=c.CalanderKey) 
 and curdate()
 group by ss_c.CalanderKey, ss_p.ProductKey
@@ -26,14 +25,13 @@ group by ss_c.CalanderKey, ss_p.ProductKey
 Union all
 -- Accessories
 SELECT ss_c.CalanderKey, ss_p.ProductKey, sum(p.ProductCost), count(p.ProductCost)
-FROM codeblooded.OrderItem oi, codeblooded.Products p, codeblooded.Phones ph, 
-starSchema.Calander ss_c,starSchema.Products ss_p
+FROM codeblooded.OrderItem oi, codeblooded.Products p,
+`project-226-starSchema`.Calander ss_c,`project-226-starSchema`.Products ss_p
 where oi.ProductId=p.ProductId
-and p.ProductType=2
-and ph.PhoneId=p.ProductId
+and p.ProductType='AC'
 and ss_c.FullDate=oi.ODate
 and oi.ODate between 
-(select max(FullDate) from starSchema.ORDERS of, starSchema.Calander c 
+(select max(FullDate) from `project-226-starSchema`.ORDERS of, `project-226-starSchema`.Calander c 
 where of.CalanderKey=c.CalanderKey) 
 and curdate()
 group by ss_c.CalanderKey, ss_p.ProductKey;
@@ -50,38 +48,21 @@ DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `sp_etl_inventory_fact` $$
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_etl_inventory_fact`(
-  IN loc_username VARCHAR(255)
 )
 BEGIN
 -- Description: Query will get all phones and accessories, their total cost and items sold per day.
 -- Appending Order_fact table data
-INSERT INTO starSchema.Inventory 
+INSERT INTO `project-226-starSchema`.Inventory 
 (CalenderKey, ProductKey, StoreKey, Quantity)
 -- Phones
 SELECT ss_c.CalanderKey, ss_p.ProductKey, ss_s.StoreKey, sum(i.Quantity)
-FROM codeblooded.Inventory i, codeblooded.Products p, codeblooded.Phones ph, 
-starSchema.Calander ss_c,starSchema.Products ss_p, starSchema.Stores ss_s
+FROM codeblooded.Inventory i, codeblooded.Products p,
+`project-226-starSchema`.Calander ss_c,`project-226-starSchema`.Products ss_p, `project-226-starSchema`.Stores ss_s
 where i.ProductId=p.ProductId
-and p.ProductType=1
-and ph.PhoneId=p.ProductId
+and p.ProductType='PH'
 and ss_c.FullDate=i.InventoryDate
 and i.InventoryDate between
-(select max(FullDate) from starSchema.INVENTORY of, starSchema.Calander c 
-where of.CalanderKey=c.CalanderKey) 
-and curdate()
-group by ss_c.CalanderKey, ss_p.ProductKey, ss_s.StoreKey
-
-UNION ALL
--- Accessories
-SELECT ss_c.CalanderKey, ss_p.ProductKey, ss_s.StoreKey, sum(i.Quantity)
-FROM codeblooded.Inventory i, codeblooded.Products p, codeblooded.Phones ph, 
-starSchema.Calander ss_c,starSchema.Products ss_p, starSchema.Stores ss_s
-where i.ProductId=p.ProductId
-and p.ProductType=2
-and ph.PhoneId=p.ProductId
-and ss_c.FullDate=i.InventoryDate
-and i.InventoryDate between
-(select max(FullDate) from starSchema.INVENTORY of, starSchema.Calander c 
+(select max(FullDate) from `project-226-starSchema`.INVENTORY of, `project-226-starSchema`.Calander c 
 where of.CalanderKey=c.CalanderKey) 
 and curdate()
 group by ss_c.CalanderKey, ss_p.ProductKey, ss_s.StoreKey;
@@ -98,41 +79,25 @@ DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `sp_etl_defects_fact` $$
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_etl_defects_fact`(
-  IN loc_username VARCHAR(255)
 )
 BEGIN
 -- Description: Query will get all phones and accessories, their total cost and items sold per day.
 -- Appending Order_fact table data
-INSERT INTO starSchema.DEFECTS 
+INSERT INTO `project-226-starSchema`.DEFECTS 
 (CalenderKey, ProductKey, StoreKey, Quantity)
 -- Phones
 SELECT ss_c.CalanderKey, ss_p.ProductKey, ss_s.StoreKey, sum(d.NoOfItems)
-FROM codeblooded.DefectsFound d, codeblooded.Products p, codeblooded.Phones ph, 
-starSchema.Calander ss_c,starSchema.Products ss_p, starSchema.Stores ss_s
+FROM codeblooded.DefectsFound d, codeblooded.Products p,
+`project-226-starSchema`.Calander ss_c,`project-226-starSchema`.Products ss_p, `project-226-starSchema`.Stores ss_s
 where d.ProductId=p.ProductId
-and p.ProductType=1
-and ph.PhoneId=p.ProductId
+and p.ProductType='PH'
 and ss_c.FullDate=d.DFDate
 and d.DFDate between
-(select max(FullDate) from starSchema.DEFECTS of, starSchema.Calander c 
-where of.CalanderKey=c.CalanderKey) 
-and curdate()
-group by ss_c.CalanderKey, ss_p.ProductKey, ss_s.StoreKey
-
-UNION ALL
--- Accessories
-SELECT ss_c.CalanderKey, ss_p.ProductKey, ss_s.StoreKey, sum(d.NoOfItems)
-FROM codeblooded.DefectsFound d, codeblooded.Products p, codeblooded.Phones ph, 
-starSchema.Calander ss_c,starSchema.Products ss_p, starSchema.Stores ss_s
-where d.ProductId=p.ProductId
-and p.ProductType=2
-and ph.PhoneId=p.ProductId
-and ss_c.FullDate=d.DFDate
-and d.DFDate between
-(select max(FullDate) from starSchema.DEFECTS of, starSchema.Calander c 
+(select max(FullDate) from `project-226-starSchema`.DEFECTS of, `project-226-starSchema`.Calander c 
 where of.CalanderKey=c.CalanderKey) 
 and curdate()
 group by ss_c.CalanderKey, ss_p.ProductKey, ss_s.StoreKey;
+
 
 END $$
 
