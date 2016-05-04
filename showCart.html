@@ -237,7 +237,8 @@ function displayCart(){
       datatype: 'JSON',
       data: {'arr': arrToSend,'productsInCart':productsInCartToSend },
       success: function( status) {
-     location.href = "products.html";
+        sessionStorage.clear();
+     location.href = "OrderPlaced.html";
     },
       error: function(xhr, desc, err) {
         console.log(xhr);
