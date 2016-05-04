@@ -54,7 +54,7 @@ CREATE DEFINER=`root`@`%` PROCEDURE `sp_etl_inventory_fact`(
 BEGIN
 -- Description: Query will get all phones and accessories, their total cost and items sold per day.
 -- Appending Order_fact table data
-INSERT INTO starSchema.Inventory 
+INSERT INTO `project-226-starSchema`.Inventory 
 (CalenderKey, ProductKey, StoreKey, Quantity)
 -- Phones
 SELECT ss_c.CalanderKey, ss_p.ProductKey, ss_s.StoreKey, sum(i.Quantity)
@@ -86,7 +86,7 @@ CREATE DEFINER=`root`@`%` PROCEDURE `sp_etl_defects_fact`(
 BEGIN
 -- Description: Query will get all phones and accessories, their total cost and items sold per day.
 -- Appending Order_fact table data
-INSERT INTO starSchema.DEFECTS 
+INSERT INTO `project-226-starSchema`.DEFECTS 
 (CalenderKey, ProductKey, StoreKey, Quantity)
 -- Phones
 SELECT ss_c.CalanderKey, ss_p.ProductKey, ss_s.StoreKey, sum(d.NoOfItems)
