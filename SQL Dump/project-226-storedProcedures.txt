@@ -3,7 +3,6 @@ DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `sp_etl_order_fact` $$
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_etl_order_fact`(
-  IN loc_username VARCHAR(255)
 )
 BEGIN
 -- Description: Query will get all phones and accessories, their total cost and items sold per day.
@@ -49,7 +48,6 @@ DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `sp_etl_inventory_fact` $$
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_etl_inventory_fact`(
-  IN loc_username VARCHAR(255)
 )
 BEGIN
 -- Description: Query will get all phones and accessories, their total cost and items sold per day.
@@ -81,7 +79,6 @@ DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `sp_etl_defects_fact` $$
 CREATE DEFINER=`root`@`%` PROCEDURE `sp_etl_defects_fact`(
-  IN loc_username VARCHAR(255)
 )
 BEGIN
 -- Description: Query will get all phones and accessories, their total cost and items sold per day.
