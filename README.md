@@ -3,9 +3,13 @@
 We have made an attempt to develope an application that could answer queries like these.
 
 How many orders were made by a Mastercard from a particular customer quartarly?
+
 How many orders were made by a Mastercard from a particular customer monthly?
+
 How many defects were registered for a specific product sold in a particulat location yearly?
+
 How many products were added to a particular store monthly?
+
 How many shippings were made for a product in a particular year?
 
 
