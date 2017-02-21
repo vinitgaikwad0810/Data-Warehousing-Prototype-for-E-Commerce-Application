@@ -7,3 +7,8 @@ The project uses HTML5,CSS3 and jQuery for the front end and PHP for the backend
 Here is a live image of the product catalog.
 
 ![alt tag](https://github.com/vinitgaikwad0810/Data-Warehousing-Prototype-for-E-Commerce-Application/blob/master/media/productCatalog.png)
+
+We had a end-to-end flow from registering a product to paying for the product. Moreover, there are screen to manage defects as well. Here is the relational schema. 
+
+
+![alt tag](https://github.com/vinitgaikwad0810/Data-Warehousing-Prototype-for-E-Commerce-Application/blob/master/images/codeBlooded_relationalSchema.png)
