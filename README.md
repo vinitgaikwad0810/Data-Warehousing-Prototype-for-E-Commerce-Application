@@ -4,4 +4,4 @@ The project was developed as part of my CMPE 226 Database Systems graduate class
 
 The project uses HTML5,CSS3 and jQuery for the front end and PHP for the backend development. It uses Amazon RDS for the MySQL instances and EC2 instances for the star schema deployment.
 
-![]({{site.baseurl}}//productCatalog.png)
+![]({{site.baseurl}}//productCatalog.png)![Vinit]({{site.baseurl}}//productCatalog.png)
