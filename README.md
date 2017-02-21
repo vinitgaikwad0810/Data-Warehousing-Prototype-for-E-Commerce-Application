@@ -12,3 +12,7 @@ We had a end-to-end flow from registering a product to paying for the product. M
 
 
 ![alt tag](https://github.com/vinitgaikwad0810/Data-Warehousing-Prototype-for-E-Commerce-Application/blob/master/images/codeBlooded_relationalSchema.png)
+
+We have also deployed following star schema to run anaytical queries.
+
+![alt tag](https://github.com/vinitgaikwad0810/Data-Warehousing-Prototype-for-E-Commerce-Application/blob/master/images/codeblooded_starSchema.png)
