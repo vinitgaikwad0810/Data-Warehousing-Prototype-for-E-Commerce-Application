@@ -111,7 +111,7 @@ Select Type of Phone
 		$con = new PDO("mysql:host=localhost;port=3306;dbname=codeblooded","root","");
 		$con->setAttribute(PDO::ATTR_ERRMODE,
 		PDO::ERRMODE_EXCEPTION);
-		$query1 = "SELECT PhoneDescription,PhoneId,Cost FROM phones";
+		$query1 = "SELECT PhoneDescription,PhoneId,Cost FROM Phones";
 	
   try{
 		foreach ($con->query($query1) as $row){
@@ -133,7 +133,7 @@ Select Type of Accessory
 		$con = new PDO("mysql:host=localhost;port=3306;dbname=codeblooded","root","");
 		$con->setAttribute(PDO::ATTR_ERRMODE,
 		PDO::ERRMODE_EXCEPTION);
-		$query1 = "SELECT AccessoriesDesc,AccessoriesId,Cost FROM accessories";
+		$query1 = "SELECT AccessoriesDesc,AccessoriesId,Cost FROM Accessories";
 	
   try{
 		foreach ($con->query($query1) as $row){
@@ -155,7 +155,7 @@ Select Type of Plan
 		$con = new PDO("mysql:host=localhost;port=3306;dbname=codeblooded","root","");
 		$con->setAttribute(PDO::ATTR_ERRMODE,
 		PDO::ERRMODE_EXCEPTION);
-		$query1 = "SELECT plantypedetailId, plantypedetailDesc FROM plantypedetail";
+		$query1 = "SELECT plantypedetailId, plantypedetailDesc FROM Plantypedetail";
 	
   try{
 		foreach ($con->query($query1) as $row){
@@ -176,7 +176,7 @@ Plan Details
 		$con = new PDO("mysql:host=localhost;port=3306;dbname=codeblooded","root","");
 		$con->setAttribute(PDO::ATTR_ERRMODE,
 		PDO::ERRMODE_EXCEPTION);
-		$query1 = "SELECT standardplanId, plandesc FROM standardplan";
+		$query1 = "SELECT standardplanId, plandesc FROM Standardplan";
 	
   try{
 		foreach ($con->query($query1) as $row){

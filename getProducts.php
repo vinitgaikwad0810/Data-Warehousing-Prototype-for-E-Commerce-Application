@@ -13,7 +13,7 @@
 			{
 				$productType = 'AC';
 			}
-		$query1 = "SELECT productId, productName, productCost, productURL FROM products where productType = '$productType'";
+		$query1 = "SELECT productId, productName, productCost, productURL FROM Products where productType = '$productType'";
 
 
 $result = $con->query($query1)->fetchAll(PDO::FETCH_ASSOC);

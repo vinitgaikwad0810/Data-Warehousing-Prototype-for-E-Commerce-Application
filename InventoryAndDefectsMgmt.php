@@ -88,7 +88,7 @@
 							<select class="form-control" name="storesDef" id ="storesDef">
 								  <?php
 								  try{
-								  		$con = new PDO("mysql:host=173.194.111.48;port=3306;dbname=codeblooded","root","cmpe226");
+								  	$con = new PDO("mysql:host=localhost;port=3306;dbname=project-226-relational","root","");
 										$con->setAttribute(PDO::ATTR_ERRMODE,
 										PDO::ERRMODE_EXCEPTION);
 										$query1 = "SELECT StoreId,Region FROM Stores s, Regions r where s.StoreRegion=r.RegionId";
@@ -111,7 +111,7 @@
 								  <?php
 								  echo "Test";
 								  try{
-								  		$con = new PDO("mysql:host=173.194.111.48;port=3306;dbname=codeblooded","root","cmpe226");
+								  	$con = new PDO("mysql:host=localhost;port=3306;dbname=project-226-relational","root","");
 										$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 										$query1 = "SELECT ProductId,ProductName FROM Products";
 										foreach ($con->query($query1) as $row){
@@ -130,7 +130,7 @@
 							<label for="customerDef">Select Customer</label>
 							<select name="customerDef" id="customerDef" class="form-control">
 								  <?php
-										$con = new PDO("mysql:host=173.194.111.48;port=3306;dbname=codeblooded","root","cmpe226");
+										$con = new PDO("mysql:host=localhost;port=3306;dbname=project-226-relational","root","");
 										$con->setAttribute(PDO::ATTR_ERRMODE,
 										PDO::ERRMODE_EXCEPTION);
 										$query1 = "SELECT CustomerId,CustomerName FROM Customer";
@@ -169,7 +169,7 @@
 								<select name="storesInv" id ="storesInv" class="form-control">
 								  <?php
 								  try{
-								  		$con = new PDO("mysql:host=173.194.111.48;port=3306;dbname=codeblooded","root","cmpe226");
+								  		$con = new PDO("mysql:host=localhost;port=3306;dbname=project-226-relational","root","");
 										$con->setAttribute(PDO::ATTR_ERRMODE,
 										PDO::ERRMODE_EXCEPTION);
 										$query1 = "SELECT StoreId,Region FROM Stores s, Regions r where s.StoreRegion=r.RegionId";
@@ -192,7 +192,7 @@
 								  <?php
 								  echo "Test";
 								  try{
-								  		$con = new PDO("mysql:host=173.194.111.48;port=3306;dbname=codeblooded","root","cmpe226");
+								  		$con = new PDO("mysql:host=localhost;port=3306;dbname=project-226-relational","root","");
 										$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 										$query1 = "SELECT ProductId,ProductName FROM Products";
 										foreach ($con->query($query1) as $row){

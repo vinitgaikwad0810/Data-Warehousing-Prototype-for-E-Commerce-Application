@@ -1,0 +1,25 @@
+DollarsRevenue	ShippingOption	Region	Month
+97456	"Australia Post"	AZ	4
+113968	"Australia Post"	CA	4
+130336	"Australia Post"	NY	4
+133296	"Australia Post"	SC	4
+102368	"Canada Post"	AZ	4
+40112	"Canada Post"	CA	4
+108704	"Canada Post"	NY	4
+118720	"Canada Post"	SC	4
+112112	"DHL Express"	AZ	4
+106672	"DHL Express"	CA	4
+6848	"DHL Express"	CA	5
+88224	"DHL Express"	NY	4
+118288	"DHL Express"	SC	4
+6592	"DHL Express"	SC	5
+139984	FedEx	AZ	4
+82800	FedEx	CA	4
+111136	FedEx	NY	4
+154832	FedEx	SC	4
+6912	FedEx	SC	5
+58352	"Royal Mail"	AZ	4
+89760	"Royal Mail"	CA	4
+11760	"Royal Mail"	CA	5
+116112	"Royal Mail"	NY	4
+90080	"Royal Mail"	SC	4

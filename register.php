@@ -85,9 +85,8 @@
 	</header><!--/header-->
 	
 <p>
-	<?php 
+	<?php
 	$name = filter_input(INPUT_POST, "name");
-	
 	$email = filter_input(INPUT_POST, "email");
 	$password = filter_input(INPUT_POST, "password");
 	$street = filter_input(INPUT_POST, "street");
@@ -109,7 +108,7 @@
 		PDO::ERRMODE_EXCEPTION);
 		
 		
-		$query = "insert into customer (`customername`, `emailid`, `street`, `city`, `state`, `country`, `zipcode`, `password`) values ('$name', '$email', '$street', '$city', '$state', '$country', '$zipcode', '$password' )";
+		$query = "insert into Customer (`customername`, `emailid`, `street`, `city`, `state`, `country`, `zipcode`, `password`) values ('$name', '$email', '$street', '$city', '$state', '$country', '$zipcode', '$password' )";
 		//echo $query;
 		//echo "<br>";
 
@@ -118,17 +117,17 @@
 		
 		if($hphone != null)
 		{
-		$query4 = "insert into customerphonenumber (`phonenumber`, `customerid`) values ('$hphone', '$custid')";
+		$query4 = "insert into CustomerPhoneNumber (`phonenumber`, `customerid`) values ('$hphone', '$custid')";
 		$con->query($query4);	
 		}
 		if($pphone != null)
 			{
-		$query2 = "insert into customerphonenumber (`phonenumber`, `customerid`) values ('$pphone', '$custid')";
+		$query2 = "insert into CustomerPhoneNumber (`phonenumber`, `customerid`) values ('$pphone', '$custid')";
 		$con->query($query2);	
 		}
 		if($ophone != null)
 			{
-		$query3 = "insert into customerphonenumber (`phonenumber`, `customerid`) values ('$ophone', '$custid')";
+		$query3 = "insert into CustomerPhoneNumber (`phonenumber`, `customerid`) values ('$ophone', '$custid')";
 		$con->query($query3);	
 		}
 		}

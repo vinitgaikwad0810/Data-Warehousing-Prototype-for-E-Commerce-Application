@@ -44,7 +44,7 @@ session_start();
 		$con->setAttribute(PDO::ATTR_ERRMODE,
 		PDO::ERRMODE_EXCEPTION);
 		
-		$query1 = "SELECT max(CAST(OrderId as int)) FROM orders";
+		$query1 = "SELECT max(CAST(OrderId as int)) FROM Orders";
 		$data = $con->query($query1);
         $orderid =  $data->fetchColumn();
 		if($orderid!=null){
@@ -55,7 +55,7 @@ session_start();
 	
 		//echo "THe customer id to be inserted is $custid";
 		
-		$query1 = "insert into orders (`orderid`,`customerid`) values ('$orderid', '$customerid')";
+		$query1 = "insert into Orders (`orderid`,`customerid`) values ('$orderid', '$customerid')";
 		$con->query($query1);
 
 		//phones

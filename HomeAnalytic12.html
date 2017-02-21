@@ -1,6 +1,9 @@
 
 <html lang="en">
 <head>
+
+
+
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
         <meta charset="utf-8">
         <title>Analytics Dashboard</title>
@@ -15,6 +18,324 @@
         <link rel="apple-touch-icon" href="/bootstrap/img/apple-touch-icon.png">
         <link rel="apple-touch-icon" sizes="72x72" href="/bootstrap/img/apple-touch-icon-72x72.png">
         <link rel="apple-touch-icon" sizes="114x114" href="/bootstrap/img/apple-touch-icon-114x114.png">
+
+<script>
+function getRadioVal(form, name) {
+    var val;
+    // get list of radio buttons with specified name
+    var radios = form.elements[name];
+    
+    // loop through list of radio buttons
+    for (var i=0, len=radios.length; i<len; i++) {
+        if ( radios[i].checked ) { // radio checked?
+            val = radios[i].value; // if so, hold its value in val
+            break; // and break out of for loop
+        }
+    }
+    return val; // return value of checked radio or undefined if none checked
+}
+
+/*
+{
+  "FactTable": "ORDERS",
+  "CalanderKey": "20",
+  "CustomerKey": "1",
+  "PaymentMethodKey": "1",
+  "ShippingOptionKey": "1",
+  "ProductKey": "1",
+  "StoreKey" : "1",
+  "SourceRegionKey":"1",
+  "DestinationRegionKey" : "1"
+      
+}
+*/
+
+function orders(){
+
+     $.ajax({
+      url: 'analytics_orders.php',
+      type: 'post',
+    //  datatype: 'JSON',
+      data: {'returnJSON': returnJSON},
+      success: function(response,status) {
+
+     var queryText = document.getElementById('queryText');
+     queryText.innerHTML ="";
+     queryText.innerHTML = "<strong> ANALYTICAL QUERY</strong>";
+     queryText.innerHTML += "<br><br><p><strong>"+response['query'] + "</strong></p>";
+
+
+        //console.log("post done>> "+data);
+         //location.href = "products.html";
+          var svg = dimple.newSvg("#chartContainer1", 1050, 400);
+    d3.tsv("http://localhost:80/Eshopper/order.tsv", function (data) {
+      var myChart = new dimple.chart(svg, data);
+      var x_axis =  ["ProductVendor", Time];
+      var y_axis =  "DollarsSold";
+      myChart.setBounds(65, 45, 505, 315)
+      myChart.addCategoryAxis("x", x_axis);
+      myChart.addMeasureAxis("y", y_axis);
+      myChart.addSeries("ProductName", dimple.plot.bar);
+      myChart.addLegend(65, 10, 510, 20, "right");
+      myChart.draw();
+    });
+
+
+     var svg2 = dimple.newSvg("#chartContainer2", 1050, 400);
+    d3.tsv("http://localhost:80/Eshopper/order.tsv", function (data) {
+      var myChart2 = new dimple.chart(svg2, data);
+      myChart2.setBounds(20, 20, 400, 300)
+      myChart2.addMeasureAxis("p", "DollarsSold");
+      myChart2.addSeries("ProductName", dimple.plot.pie);
+      myChart2.addLegend(500, 20, 90, 300, "right");
+      myChart2.draw();
+    });
+
+
+    },
+      error: function(xhr, desc, err) {
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+
+      }
+    }); 
+
+}
+
+function defects(){
+
+ $.ajax({
+      url: 'analytics_defects.php',
+      type: 'post',
+    //  datatype: 'JSON',
+      data: {'returnJSON': returnJSON},
+      success: function(response,status) {
+
+     var queryText = document.getElementById('queryText');
+     queryText.innerHTML ="";
+     queryText.innerHTML = "<strong> ANALYTICAL QUERY</strong>";
+     queryText.innerHTML += "<br><br><p><strong>"+response['query'] + "</strong></p>";
+
+
+        //console.log("post done>> "+data);
+         //location.href = "products.html";
+          var svg = dimple.newSvg("#chartContainer1", 1050, 400);
+    d3.tsv("http://localhost:80/Eshopper/defects.tsv", function (data) {
+      var myChart = new dimple.chart(svg, data);
+      var x_axis =  ["ProductVendor", Time];
+      var y_axis =  "NoOfItems";
+      myChart.setBounds(65, 45, 505, 315)
+      myChart.addCategoryAxis("x", x_axis);
+      myChart.addMeasureAxis("y", y_axis);
+      myChart.addSeries("ProductName", dimple.plot.bar);
+      myChart.addLegend(65, 10, 510, 20, "right");
+      myChart.draw();
+    });
+
+
+     var svg2 = dimple.newSvg("#chartContainer2", 1050, 400);
+    d3.tsv("http://localhost:80/Eshopper/defects.tsv", function (data) {
+      var myChart2 = new dimple.chart(svg2, data);
+      myChart2.setBounds(20, 20, 400, 300)
+      myChart2.addMeasureAxis("p", "NoOfItems");
+      myChart2.addSeries("ProductName", dimple.plot.pie);
+      myChart2.addLegend(500, 20, 90, 300, "right");
+      myChart2.draw();
+    });
+
+
+    },
+      error: function(xhr, desc, err) {
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+
+      }
+    }); 
+}
+function inventory (){
+
+$.ajax({
+      url: 'analytics_inventory.php',
+      type: 'post',
+    //  datatype: 'JSON',
+      data: {'returnJSON': returnJSON},
+      success: function(response,status) {
+
+     var queryText = document.getElementById('queryText');
+     queryText.innerHTML ="";
+     queryText.innerHTML = "<strong> ANALYTICAL QUERY</strong>";
+     queryText.innerHTML += "<br><br><p><strong>"+response['query'] + "</strong></p>";
+
+
+        //console.log("post done>> "+data);
+         //location.href = "products.html";
+          var svg = dimple.newSvg("#chartContainer1", 1050, 400);
+    d3.tsv("http://localhost:80/Eshopper/inventory.tsv", function (data) {
+      var myChart = new dimple.chart(svg, data);
+      var x_axis =  ["StoreRegion", Time];
+      var y_axis =  "TotalQuantity";
+      myChart.setBounds(65, 45, 505, 315)
+      myChart.addCategoryAxis("x", x_axis);
+      myChart.addMeasureAxis("y", y_axis);
+      myChart.addSeries("ProductName", dimple.plot.bar);
+      myChart.addLegend(65, 10, 510, 20, "right");
+      myChart.draw();
+    });
+
+
+     var svg2 = dimple.newSvg("#chartContainer2", 1050, 400);
+    d3.tsv("http://localhost:80/Eshopper/inventory.tsv", function (data) {
+      var myChart2 = new dimple.chart(svg2, data);
+      myChart2.setBounds(20, 20, 400, 300)
+      myChart2.addMeasureAxis("p", "TotalQuantity");
+      myChart2.addSeries("StoreRegion", dimple.plot.pie);
+      myChart2.addLegend(500, 20, 90, 300, "right");
+      myChart2.draw();
+    });
+
+
+    },
+      error: function(xhr, desc, err) {
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+
+      }
+    });
+}
+
+function shipping(){
+
+$.ajax({
+      url: 'analytics_shipping.php',
+      type: 'post',
+    //  datatype: 'JSON',
+      data: {'returnJSON': returnJSON},
+      success: function(response,status) {
+
+     var queryText = document.getElementById('queryText');
+     queryText.innerHTML ="";
+     queryText.innerHTML = "<strong> ANALYTICAL QUERY</strong>";
+     queryText.innerHTML += "<br><br><p><strong>"+response['query'] + "</strong></p>";
+
+
+        //console.log("post done>> "+data);
+         //location.href = "products.html";
+          var svg = dimple.newSvg("#chartContainer1", 1050, 400);
+    d3.tsv("http://localhost:80/Eshopper/shipping.tsv", function (data) {
+      var myChart = new dimple.chart(svg, data);
+      var x_axis =  ["ShippingOption", Time];
+      var y_axis =  "DollarsRevenue";
+      myChart.setBounds(65, 45, 505, 315)
+      myChart.addCategoryAxis("x", x_axis);
+      myChart.addMeasureAxis("y", y_axis);
+      myChart.addSeries("Region", dimple.plot.bar);
+      myChart.addLegend(65, 10, 510, 20, "right");
+      myChart.draw();
+    });
+
+
+     var svg2 = dimple.newSvg("#chartContainer2", 1050, 400);
+    d3.tsv("http://localhost:80/Eshopper/shipping.tsv", function (data) {
+      var myChart2 = new dimple.chart(svg2, data);
+      myChart2.setBounds(20, 20, 400, 300)
+      myChart2.addMeasureAxis("p", "DollarsRevenue");
+      myChart2.addSeries("Region", dimple.plot.pie);
+      myChart2.addLegend(500, 20, 90, 300, "right");
+      myChart2.draw();
+    });
+
+
+    },
+      error: function(xhr, desc, err) {
+        console.log(xhr);
+        console.log("Details: " + desc + "\nError:" + err);
+
+      }
+    });
+}
+var Product;
+var Time;
+var Paymenttypes;
+var Shippingoptions;
+var Zipcode;
+var Region;
+var Fact;
+
+function addPercentage(){
+
+if(Product === "undefined"){
+ Product = "%";
+}
+ if (Time === "undefined"){
+ Time = "%";
+}
+ if (Paymenttypes === "undefined"){
+  Paymenttypes = "%";
+}
+if (Shippingoptions === "undefined"){
+  Shippingoptions = "%";
+}
+if (Zipcode === "undefined"){
+Zipcode = "%";
+}
+if (Region === "undefined"){
+  Region = "%";
+}
+if (Fact === "undefined"){
+  Fact = "%";
+}
+}
+
+function generateStarSchemaQuery() {
+  var returnObject = {}
+
+  Product = String(getRadioVal(document.getElementById('Products'),'products'));
+  Time = String(getRadioVal(document.getElementById('Time'),'time'));
+  Paymenttypes = String(getRadioVal(document.getElementById('Paymenttypes'),'paymenttypes'));
+  Shippingoptions =String(getRadioVal(document.getElementById('Shippingoptions'),'shippingoptions'));
+  Zipcode = String(getRadioVal(document.getElementById('Zipcode'),'zipcode'));
+  Region = String(getRadioVal(document.getElementById('Region'),'region'));
+  Fact = String(getRadioVal(document.getElementById('Fact'),'fact'));
+
+
+ addPercentage()
+/*  alert(Product);
+  alert(Time);
+  alert(Paymenttypes);
+  alert(Shippingoptions);
+  alert(Zipcode);
+  alert(Region);
+  alert(Fact);*/
+  returnObject['FactTable'] = Fact;
+  returnObject ['Time'] = Time;
+  returnObject['PaymentMethod'] = Paymenttypes; 
+  returnObject['ShippingOption'] = Shippingoptions;
+  returnObject ['Store'] = Zipcode;
+  returnObject['Region'] = Region;
+  returnObject['Product'] = Product; 
+
+  returnJSON = JSON.stringify(returnObject);
+  console.log(returnJSON);
+
+if(Fact === 'ORDERS'){
+
+  orders();
+
+ }else if(Fact === 'DEFECTS'){
+  defects();
+
+ }else if(Fact === 'INVENTORY'){
+
+  inventory();
+
+ }else if(Fact === 'SHIPPING'){
+  shipping();
+
+ }
+
+}
+</script>
+
 
 
         <style type="text/css">
@@ -150,32 +471,64 @@ h3,h4,h5 {
  padding-top:20%;
 }
 
+
+#analytics {
+  display: flex;
+}
+#queryText {
+  width: 300px;
+
+  /* Just so it's visible */
+}
+#buttons {
+  flex: 1;
+  /* Grow to rest of container */
+  
+  /* Just so it's visible */
+}
+#button1 {
+ 
+  text-align: center;
+
+  /* Just so it's visible */
+}
+#button2 {
+  flex: 1;
+
+  /* Grow to rest of container */
+
+  text-align: center;     
+  /* Just so it's visible */
+}
         </style>
     </head>
     
     <!-- HTML code from Bootply.com editor -->
+
+
 
 <body>
 
 
 <div class="container" id="main2">
   <div class="row">  
-   <div class="col-md-4 col-sm-8">
+   <div class="col-md-4">
 
  <div class="list-group-item panel">
     <a class="list-group-item list-group-item strong text-center" style="background: #009ce0; color: white;" data-toggle="collapse"> Search Products
-    <a href="#demo1" class="list-group-item list-group-item-success strong collapsed" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-photo"></i> Payment Methods<i class="fa fa-caret-down"></i></a>
-    <div class="list-group-submenu collapse" id="demo1" style="height: 0px;">
-      <a href="#" class="list-group-item"><input id="1" type="checkbox">&nbsp;  Galaxy Express 3</a>
-      <a href="#" class="list-group-item"><input  id="2" type="checkbox">&nbsp; Galaxy Express Prime</a>
-      <a href="#" class="list-group-item"><input id="3" type="checkbox">&nbsp; Galaxy AMP 2</a>
-      <a href="#" class="list-group-item"><input id="4" type="checkbox">&nbsp; Galaxy J7</a>
-      <a href="#" class="list-group-item"><input id="5" type="checkbox">&nbsp; Galaxy S7</a>
-      <a href="#" class="list-group-item"><input id="6" type="checkbox">&nbsp; Galaxy S7 Plus</a>
-      <a href="#" class="list-group-item"><input id="7" type="checkbox">&nbsp;  IPhone 5S</a>
-      <a href="#" class="list-group-item"><input id="8" type="checkbox">&nbsp;Screen Protector</a>
-      <a href="#" class="list-group-item"><input id="9" type="checkbox">&nbsp; Bluetooth Headsets</a>
-  
+    <a href="#demo0" class="list-group-item list-group-item-success strong collapsed" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-photo"></i> Products<i class="fa fa-caret-down"></i></a>
+    <div class="list-group-submenu collapse" id="demo0" style="height: 0px;">
+    <form id ="Products" action="">
+      <a href="#" class="list-group-item"><input id="1"  name = "products" value = "Galaxy Express 3"type="radio">&nbsp;  Galaxy Express 3</a>
+      <a href="#" class="list-group-item"><input  id="2"  name = "products" value = "Galaxy Express Prime"type="radio">&nbsp; Galaxy Express Prime</a>
+      <a href="#" class="list-group-item"><input id="3" name = "products" value = "Galaxy AMP 2" type="radio">&nbsp; Galaxy AMP 2</a>
+      <a href="#" class="list-group-item"><input id="4"  name = "products" value = "Galaxy J7" type="radio">&nbsp; Galaxy J7</a>
+      <!--<a href="#" class="list-group-item"><input id="5"  name = "products" value = "Galaxy S7" type="radio">&nbsp; Galaxy S7</a>-->
+      <!--<a href="#" class="list-group-item"><input id="6" name = "products" value = "Galaxy S7 Plus" type="radio">&nbsp; Galaxy S7 Plus</a>-->
+      <a href="#" class="list-group-item"><input id="7" name = "products" value = "IPhone 5S" type="radio">&nbsp;  IPhone 5S</a>
+      <a href="#" class="list-group-item"><input id="8" name = "products" value = "Screen Protector" type="radio">&nbsp;Screen Protector</a>
+      <a href="#" class="list-group-item"><input id="9"  name = "products" value = "Bluetooth Headsets" type="radio">&nbsp; Bluetooth Headsets</a>
+  </form>
     </div> 
    
      <a class="list-group-item list-group-item strong text-center" style="background: #009ce0; color: white;" data-toggle="collapse"><button type="button" class="btn btn-success btn-sm">Analyze</button> </a>
@@ -184,95 +537,81 @@ h3,h4,h5 {
 </div>
 
 
-   <div class="col-md-4 col-sm-8">
+   <div class="col-md-4 ">
 
  <div class="list-group-item panel">
-    <a class="list-group-item list-group-item strong text-center" style="background: #009ce0; color: white;" data-toggle="collapse"> Analyze Time Based</a>
-    <a href="#demo1" class="list-group-item list-group-item-success strong collapsed" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-photo"></i> Year <i class="fa fa-caret-down"></i></a>
+    <a class="list-group-item list-group-item strong text-center" style="background: #009ce0; color: white;" data-toggle="collapse"> Drill Up- Drill Down Time based</a>
+    <a href="#demo1" class="list-group-item list-group-item-success strong collapsed" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-photo"></i> Time Dimension Hierarchies <i class="fa fa-caret-down"></i></a>
+
     <div class="list-group-submenu collapse" id="demo1" style="height: 0px;">
-      <a href="#" class="list-group-item"><input id="2" type="checkbox">&nbsp; 2013</a>
-      <a href="#" class="list-group-item"><input  id="3" type="checkbox">&nbsp; 2014</a>
-      <a href="#" class="list-group-item"><input id="4" type="checkbox">&nbsp; 2015</a>
-      <a href="#" class="list-group-item"><input id="1" type="checkbox">&nbsp; 2016</a>
+    <form id= "Time">
+      <a href="#" class="list-group-item"><input id="Year" name= "time"  value = "Year" type="radio">&nbsp; Year</a>
+      <a href="#" class="list-group-item"><input  id="Quarter" name = "time" value = "Quarter" type="radio">&nbsp; Quarter</a>
+      <a href="#" class="list-group-item"><input id="Month" name = "time" value = "Month" type="radio">&nbsp; Month</a>
+      <!--<a href="#" class="list-group-item"><input id="4" type="radio">&nbsp; 2016</a>-->
+       </form>
     </div> 
    
-    <a href="#demo2" class="list-group-item list-group-item strong" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-language"></i> Month <i class="fa fa-caret-down"></i></a>
-    <div class="list-group-submenu collapse in" id="demo2" style="height: auto;">
-      <a href="#" class="list-group-item"><input  id="1" type="checkbox">&nbsp; Jan</a>
-      <a href="#" class="list-group-item"><input id="2" type="checkbox">&nbsp; Feb/a>
-      <a href="#" class="list-group-item"><input id="3" type="checkbox">&nbsp; March</a>
-       <a href="#" class="list-group-item"><input id="4" type="checkbox">&nbsp; APril</a>
-      
-    </div>
-    <a href="#demo3" class="list-group-item list-group-item strong collapsed" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-cubes"></i>  Quarter<i class="fa fa-caret-down"></i></a>
-    <div class="collapse list-group-submenu" id="demo3">
-      <a href="#" class="list-group-item"><input id="1" type="checkbox">&nbsp; First</a>
-      <a href="#" class="list-group-item"><input id="2" type="checkbox">&nbsp; Second</a>
-      <a href="#" class="list-group-item"><input id="3" type="checkbox">&nbsp;  Third</a>
-      <a href="#" class="list-group-item"><input id="4" type="checkbox">&nbsp; Fourth</a>
-    
-  
+   
+     <a href="#demo11" class="list-group-item list-group-item-success strong collapsed" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-photo"></i> FACT TABLE <i class="fa fa-caret-down"></i></a>
 
-    </div>
-
-    <a href="#demo4" class="list-group-item list-group-item strong collapsed" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-cubes"></i> Day <i class="fa fa-caret-down"></i></a>
-    <div class="collapse list-group-submenu" id="demo4">
-      <a href="#" class="list-group-item"><input id="1" type="checkbox">&nbsp; Sunday</a>
-      <a href="#" class="list-group-item"><input id="2" type="checkbox">&nbsp; Monday</a>
-      <a href="#" class="list-group-item"><input id="3" type="checkbox">&nbsp; Tuesday</a>
-      <a href="#" class="list-group-item"><input id="4" type="checkbox">&nbsp; Wednesday</a>
-      <a href="#" class="list-group-item"><input id="4" type="checkbox">&nbsp; Thrusday</a>
-       <a href="#" class="list-group-item"><input id="4" type="checkbox">&nbsp; Friday</a>
-      <a href="#" class="list-group-item"><input id="4" type="checkbox">&nbsp; Satuday</a>
-    </div>
-
-
+    <div class="list-group-submenu collapse" id="demo11" style="height: 0px;">
+    <form id= "Fact">
+      <a href="#" class="list-group-item"><input id="ORDERS" name= "fact"  value = "ORDERS" type="radio">&nbsp; ORDERS</a>
+      <a href="#" class="list-group-item"><input  id="DEFECTS" name = "fact" value = "DEFECTS" type="radio">&nbsp; DEFECTS</a>
+      <a href="#" class="list-group-item"><input id="INVENTORY" name = "fact" value = "INVENTORY" type="radio">&nbsp; INVENTORY</a>
+      <a href="#" class="list-group-item"><input id="SHIPPING" name = "fact" value = "SHIPPING" type="radio">&nbsp; SHIPPING</a>
+      <!--<a href="#" class="list-group-item"><input id="4" type="radio">&nbsp; 2016</a>-->
+       </form>
+    </div> 
 
       <a class="list-group-item list-group-item strong text-center" style="background: #009ce0; color: white;" data-toggle="collapse"><button type="button" class="btn btn-success btn-sm">Analyze</button> </a>
   </div>
 
 </div>
-</div>
-</div>
-
-
-<div class="col-md-4 col-sm-8">
+<div class="col-md-4 ">
 
  <div class="list-group-item panel">
     <a class="list-group-item list-group-item strong text-center" style="background: #009ce0; color: white;" data-toggle="collapse"> Analyze Sales</a>
-    <a href="#demo1" class="list-group-item list-group-item-success strong collapsed" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-photo"></i> Payment Methods<i class="fa fa-caret-down"></i></a>
-    <div class="list-group-submenu collapse" id="demo1" style="height: 0px;">
-      <a href="#" class="list-group-item"><input id="2" type="checkbox">&nbsp; mastercard</a>
-      <a href="#" class="list-group-item"><input  id="3" type="checkbox">&nbsp; netbanking</a>
-      <a href="#" class="list-group-item"><input id="4" type="checkbox">&nbsp; paypal</a>
-      <a href="#" class="list-group-item"><input id="1" type="checkbox">&nbsp; visa</a>
+    <a href="#demo5" class="list-group-item list-group-item-success strong collapsed" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu1"><i class="fa fa-photo"></i> Payment Methods<i class="fa fa-caret-down"></i></a>
+    <div class="list-group-submenu collapse" id="demo5" style="height: 0px;">
+    <form id = "Paymenttypes">
+      <a href="#" class="list-group-item"><input id="2" name = "paymenttypes" type="radio" value ="mastercard">&nbsp; mastercard</a>
+      <a href="#" class="list-group-item"><input  id="3" name = "paymenttypes" type="radio" value = "netbanking">&nbsp; netbanking</a>
+      <a href="#" class="list-group-item"><input id="4"  name = "paymenttypes" type="radio" value = "paypal">&nbsp; paypal</a>
+      <a href="#" class="list-group-item"><input id="1" name = "paymenttypes" type="radio" value = "visa">&nbsp; visa</a>
+      </form>
     </div> 
    
-    <a href="#demo2" class="list-group-item list-group-item strong" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-language"></i> Regions <i class="fa fa-caret-down"></i></a>
-    <div class="list-group-submenu collapse in" id="demo2" style="height: auto;">
-      <a href="#" class="list-group-item"><input  id="1" type="checkbox">&nbsp; CA</a>
-      <a href="#" class="list-group-item"><input id="2" type="checkbox">&nbsp; AZ</a>
-      <a href="#" class="list-group-item"><input id="3" type="checkbox">&nbsp; NY</a>
-       <a href="#" class="list-group-item"><input id="4" type="checkbox">&nbsp; SC</a>
-      
+    <a href="#demo6" class="list-group-item list-group-item strong" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu1"><i class="fa fa-language"></i> Regions <i class="fa fa-caret-down"></i></a>
+    <div class="list-group-submenu collapse in" id="demo6" style="height: auto;">
+    <form id = "Region">
+      <a href="#" class="list-group-item"><input  id="1" name = "region" type="radio" value ="CA" >&nbsp; CA</a>
+      <a href="#" class="list-group-item"><input id="2" name = "region" type="radio" value ="AZ">&nbsp; AZ</a>
+      <a href="#" class="list-group-item"><input id="3" name = "region" type="radio" value = "NY">&nbsp; NY</a>
+       <a href="#" class="list-group-item"><input id="4" name = "region" type="radio" value = "SC">&nbsp; SC</a>
+      </form>
     </div>
-    <a href="#demo3" class="list-group-item list-group-item strong collapsed" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-cubes"></i>  Shipping Options <i class="fa fa-caret-down"></i></a>
-    <div class="collapse list-group-submenu" id="demo3">
-      <a href="#" class="list-group-item"><input id="1" type="checkbox">&nbsp; Australia Post</a>
-      <a href="#" class="list-group-item"><input id="2" type="checkbox">&nbsp; Canada Post</a>
-      <a href="#" class="list-group-item"><input id="3" type="checkbox">&nbsp;  DHL Express</a>
-      <a href="#" class="list-group-item"><input id="4" type="checkbox">&nbsp; FedEx</a>
-      <a href="#" class="list-group-item"><input id="5" type="checkbox">&nbsp; Royal Mail</a>
-  
+    <a href="#demo7" class="list-group-item list-group-item strong collapsed" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-cubes"></i>  Shipping Options <i class="fa fa-caret-down"></i></a>
+    <div class="collapse list-group-submenu" id="demo7">
+    <form id ="Shippingoptions">
+      <a href="#" class="list-group-item"><input id="1" name = "shippingoptions"type="radio" value ="Australia Post">&nbsp; Australia Post</a>
+      <a href="#" class="list-group-item"><input id="2" name = "shippingoptions"type="radio" value = "Canada Post">&nbsp; Canada Post</a>
+      <a href="#" class="list-group-item"><input id="3"name = "shippingoptions" type="radio" value="DHL Express">&nbsp;  DHL Express</a>
+      <a href="#" class="list-group-item"><input id="4" name = "shippingoptions"type="radio" value = "FedEx">&nbsp; FedEx</a>
+      <a href="#" class="list-group-item"><input id="5" name = "shippingoptions"type="radio" value = "Royal Mail">&nbsp; Royal Mail</a>
+  </form>
 
     </div>
 
-    <a href="#demo4" class="list-group-item list-group-item strong collapsed" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-cubes"></i>  Store Zip <i class="fa fa-caret-down"></i></a>
-    <div class="collapse list-group-submenu" id="demo4">
-      <a href="#" class="list-group-item"><input id="1" type="checkbox">&nbsp; 95112</a>
-      <a href="#" class="list-group-item"><input id="2" type="checkbox">&nbsp; 11012</a>
-      <a href="#" class="list-group-item"><input id="3" type="checkbox">&nbsp; 85112</a>
-      <a href="#" class="list-group-item"><input id="4" type="checkbox">&nbsp; 21012</a>
+    <a href="#demo8" class="list-group-item list-group-item strong collapsed" style="background: #f7f7f7;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-cubes"></i>  Store Zip <i class="fa fa-caret-down"></i></a>
+    <div class="collapse list-group-submenu" id="demo8">
+    <form id ="Zipcode">
+      <a href="#" class="list-group-item"><input id="1"  name = "zipcode" type="radio" value ="95112">&nbsp; 95112</a>
+      <a href="#" class="list-group-item"><input id="2"  name = "zipcode" type="radio" value = "11012">&nbsp; 11012</a>
+      <a href="#" class="list-group-item"><input id="3"  name = "zipcode" type="radio" value = "85112">&nbsp; 85112</a>
+      <a href="#" class="list-group-item"><input id="4" name = "zipcode"  type="radio" value = "21022">&nbsp; 21012</a>
+      </form>
     </div>
 
       <a class="list-group-item list-group-item strong text-center" style="background: #009ce0; color: white;" data-toggle="collapse"><button type="button" class="btn btn-success btn-sm">Analyze</button> </a>
@@ -280,30 +619,59 @@ h3,h4,h5 {
 
 </div>
 </div>
-</div>
 
+
+
+
+</div>
+</div>
+</div>
+<br>
+<br>  
+
+<div id ="analytics"><br><br><div id = "queryText"> <p><strong>SELECT SUM( SV.NoOfItems ), C.CategoryName, V.VendorName,
+       EXTRACTWEEKDAY(ST.Date), EXTRACTQUARTER(ST.Date)
+       
+FROM Region R, Store S, SalesTransaction ST, SoldVia SV,
+     Product P, Vendor V, Category C
+       
+WHERE R.RegionID = S.RegionID
+AND   S.StoreID = ST.StoreID
+AND   ST.Tid = SV.Tid
+AND   SV.ProductID = P.ProductID
+AND   P.VendorID = V.VendorID
+AND   P.CateoryID = C.CategoryID
+AND   V.VendorName = 'Pacifica Gear'
+AND   C.CategoryName = 'Camping'
+AND   R.RegionName = 'Tristate'
+AND   EXTRACTWEEKDAY(St.Date) = 'Saturday'
+AND   EXTRACTYEAR(ST.Date) = 2013
+AND   EXTRACTQUARTER(ST.Date) IN ('Q1', 'Q2')
+
+GROUP BY C.CategoryName, 
+         V.VendorName,
+         EXTRACTWEEKDAY(ST.Date), 
+         EXTRACTQUARTER(ST.Date); </strong></p></div>
+<div id ="buttons">
+<div id = "button1"><button id ="starSchemaButton"style="height:200px;width:200px; align : center" type="button" onclick="generateStarSchemaQuery()">GENERATE STAR SCHEMA QUERY !</button></div>
+
+
+<div id = "button2"><button style="height:200px;width:200px" type="button">GENERATE ANALYTICAL GRAPHS !</button></div>
+</div>
+         </div>
 <!--main-->
 <div class="container" id="main">
    <div class="row">  
 
-   <div class="col-md-6 col-sm-8">
-        <div class="panel panel-default">
+   <div class="col-md-12 col-sm-8">
+        <div class="panel panel-default" style="width:700px;">
           <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Analysis of Sold Products</h4></div>
 
-<div id="chartContainer">
+<div id="chartContainer1" style="width:700px;">
   <script src="http://dimplejs.org//lib/d3.v3.4.8.js"></script>
   <script src="http://dimplejs.org/dist/dimple.v2.2.0.min.js"></script>
   <script type="text/javascript">
-    var svg = dimple.newSvg("#chartContainer", 450, 400);
-    d3.tsv("http://dimplejs.org/data/example_data.tsv", function (data) {
-      var myChart = new dimple.chart(svg, data);
-      myChart.setBounds(60, 30, 510, 330)
-      myChart.addCategoryAxis("x", ["Price Tier", "Channel"]);
-      myChart.addMeasureAxis("y", "Unit Sales");
-      myChart.addSeries("Channel", dimple.plot.bar);
-      myChart.addLegend(65, 10, 510, 20, "right");
-      myChart.draw();
-    });
+   
   </script>
    </div>
    			
@@ -311,24 +679,16 @@ h3,h4,h5 {
 </div>
 
 
-<div class="col-md-6 col-sm-8">
-<div class="panel panel-default">
+<div class="col-md-12 col-sm-8">
+<div class="panel panel-default" style="width:700px;">
            <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Category Wise Sales</h4></div>
    			<div class="panel-body">
   <div id="chartContainer2">
   <script src="http://dimplejs.org/lib/d3.v3.4.8.js"></script>
   <script src="http://dimplejs.org/dist/dimple.v2.2.0.min.js"></script>
   <script type="text/javascript">
-    var svg2 = dimple.newSvg("#chartContainer2", 500, 400);
-    d3.tsv("http://dimplejs.org/data/example_data.tsv", function (data) {
-      var myChart2 = new dimple.chart(svg2, data);
-      myChart2.setBounds(20, 20, 400, 360)
-      myChart2.addMeasureAxis("p", "Unit Sales");
-      myChart2.addSeries("Owner", dimple.plot.pie);
-      myChart2.addLegend(500, 20, 90, 300, "left");
-      myChart2.draw();
-    });
-  </script>
+   
+  </script> 
 </div>
 
               

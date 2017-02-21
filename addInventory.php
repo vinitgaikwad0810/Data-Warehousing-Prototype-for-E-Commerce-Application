@@ -11,7 +11,8 @@ session_start();
  		$finalArr = filter_input(INPUT_POST, 'finalArr');
  		
  		$temp = json_decode($finalArr,TRUE);
- 		$con = new PDO("mysql:host=173.194.111.48;port=3306;dbname=codeblooded","root","cmpe226");
+ 		//$con = new PDO("mysql:host=173.194.111.48;port=3306;dbname=codeblooded","root","cmpe226");
+ 		$con = new PDO("mysql:host=localhost;port=3306;dbname=project-226-relational","root","");
 		$con->setAttribute(PDO::ATTR_ERRMODE,
 		PDO::ERRMODE_EXCEPTION);
 

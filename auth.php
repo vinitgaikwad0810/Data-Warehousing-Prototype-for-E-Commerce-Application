@@ -12,7 +12,7 @@ session_start();
 		$con = new PDO("mysql:host=localhost;port=3306;dbname=project-226-relational","root","");
 		$con->setAttribute(PDO::ATTR_ERRMODE,
 		PDO::ERRMODE_EXCEPTION);
-		$query1 = "SELECT customerId FROM customer where emailid= '" . $email . "' and password = '" . $pass . "'";
+		$query1 = "SELECT customerId FROM Customer where emailid= '" . $email . "' and password = '" . $pass . "'";
 		
   try{
 		$res=$con->query($query1);
